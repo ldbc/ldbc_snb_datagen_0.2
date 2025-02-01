@@ -187,7 +187,7 @@ It is also possible to pass a parameter file:
 ### Docker images
 
 SNB Datagen images are available via [Docker Hub](https://hub.docker.com/orgs/ldbc/repositories).
-The image tags follow the pattern `${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION}`, e.g `ldbc/datagen-standalone:0.5.0-2.12_spark3.2`.
+The image tags follow the pattern `${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION}`, e.g `ldbc/datagen-standalone:0.5.1-2.12_spark3.2`.
 
 When building images ensure that you [use BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds).
 
@@ -203,7 +203,7 @@ docker run \
     --mount type=bind,source="$(pwd)"/out_sf${SF}_bi,target=/out \
     --mount type=bind,source="$(pwd)"/conf,target=/conf,readonly \
     -e SPARK_CONF_DIR=/conf \
-    ldbc/datagen-standalone:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION} \
+    ldbc/datagen-standalone:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION} \
     --parallelism 1 \
     -- \
     --format csv \
@@ -218,7 +218,7 @@ The standalone Docker image can be built with the provided Dockerfile. To build,
 export PLATFORM_VERSION=$(sbt -batch -error 'print platformVersion')
 export DATAGEN_VERSION=$(sbt -batch -error 'print version')
 export DOCKER_BUILDKIT=1
-docker build . --target=standalone -t ldbc/datagen-standalone:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION}
+docker build . --target=standalone -t ldbc/datagen-standalone:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION}
 ```
 
 #### JAR-only image
@@ -234,7 +234,7 @@ COPY --from=ldbc/datagen-jar:${VERSION} /jar /lib/ldbc-datagen.jar
 The JAR-only Docker image can be built with the provided Dockerfile. To build, execute the following command from the repository directory:
 
 ```bash
-docker build . --target=jar -t ldbc/datagen-jar:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION}
+docker build . --target=jar -t ldbc/datagen-jar:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION}
 ```
 
 #### Pushing to Docker Hub
@@ -242,11 +242,11 @@ docker build . --target=jar -t ldbc/datagen-jar:${DATAGEN_VERSION/+/-}-${PLATFOR
 To release a new snapshot version on Docker Hub, run:
 
 ```bash
-docker tag ldbc/datagen-jar:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION} ldbc/datagen-jar:latest
-docker push ldbc/datagen-jar:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION}
+docker tag ldbc/datagen-jar:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION} ldbc/datagen-jar:latest
+docker push ldbc/datagen-jar:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION}
 docker push ldbc/datagen-jar:latest
-docker tag ldbc/datagen-standalone:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION} ldbc/datagen-standalone:latest
-docker push ldbc/datagen-standalone:${DATAGEN_VERSION/+/-}-${PLATFORM_VERSION}
+docker tag ldbc/datagen-standalone:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION} ldbc/datagen-standalone:latest
+docker push ldbc/datagen-standalone:${DATAGEN_VERSION/[-+]*/}-${PLATFORM_VERSION}
 docker push ldbc/datagen-standalone:latest
 ```
 
