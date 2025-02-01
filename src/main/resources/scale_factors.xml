@@ -248,5 +248,23 @@
         </property>
     </scale_factor>
 
+    <scale_factor name="100000">
+        <property>
+            <name>generator.numPersons</name>
+            <value>250000000</value>
+        </property>
+        <property>
+            <name>generator.startYear</name>
+            <value>2010</value>
+        </property>
+        <property>
+            <name>generator.numYears</name>
+            <value>3</value>
+        </property>
+        <property>
+            <name>generator.degreeDistribution</name>
+            <value>Facebook</value>
+        </property>
+    </scale_factor>
 
 </scale_factors>
